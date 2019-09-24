@@ -7,57 +7,43 @@ import { getPackedSettings } from "http2";
 // Type defintions (schema)
 const typeDefs = `
     type Query {
-        hello: String!
-        name: String!
-        location: String!
-        bio: String!
-        id: ID!
-        age: Int!
-        gpa: Float
-        employed: Boolean!
-        title: String!
-        price: Float!
-        releaseYear: Int
-        rating: Float
-        inStock: Boolean
+      me: User!
+      post: Post!
+    }
+
+    type User {
+      id: ID!
+      name: String!
+      email: String!
+      age: Int
+    }
+
+    type Post {
+      id: ID!
+      title: String!
+      body: String!
+      published: Boolean!
     }
 `;
 
 // Resolvers
 const resolvers = {
   Query: {
-    title() {
-      return "Michael Cai";
+    me() {
+      return {
+        id: "123456789",
+        name: " Michael",
+        email: "michael.cai!@ibm.com",
+        age: "22"
+      };
     },
-    price() {
-      return "123.02";
-    },
-    releaseYear() {
-      return null;
-    },
-    rating() {
-      return "3.55";
-    },
-    inStock() {
-      return false;
-    },
-    hello() {
-      return "This is my first query!";
-    },
-    name() {
-      return "Michael Cai";
-    },
-    id() {
-      return "abc123";
-    },
-    age() {
-      return 22;
-    },
-    employed() {
-      return true;
-    },
-    gpa() {
-      return null;
+    post() {
+      return {
+        id: "98u3204f",
+        title: "Work of my life",
+        body: "body of my life book so good",
+        published: false
+      }
     }
   }
 };
