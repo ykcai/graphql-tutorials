@@ -7,8 +7,10 @@ import { getPackedSettings } from "http2";
 // Type defintions (schema)
 const typeDefs = `
     type Query {
+      greeting(name: String, position: String): String!
       me: User!
       post: Post!
+      add(num1: Float, num2: Float): Float!
     }
 
     type User {
@@ -29,6 +31,20 @@ const typeDefs = `
 // Resolvers
 const resolvers = {
   Query: {
+    add(parent, args, context, info) {
+      if (args.num1 && args.num2) {
+        return args.num1 + args.num2;
+      } else {
+        return args.num1 ? args.num1 : args.num2;
+      }
+    },
+    greeting(parent, args, context, info) {
+      if (args.name && args.position) {
+        return `Hello ${args.name}. You are my fav ${args.position}`;
+      } else {
+        return "Hello World";
+      }
+    },
     me() {
       return {
         id: "123456789",
@@ -43,7 +59,7 @@ const resolvers = {
         title: "Work of my life",
         body: "body of my life book so good",
         published: false
-      }
+      };
     }
   }
 };
