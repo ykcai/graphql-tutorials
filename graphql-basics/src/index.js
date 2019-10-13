@@ -8,9 +8,9 @@ import { getPackedSettings } from "http2";
 const typeDefs = `
     type Query {
       greeting(name: String, position: String): String!
+      add(numbers: [Float!]!): Float!
       me: User!
       post: Post!
-      add(num1: Float, num2: Float): Float!
     }
 
     type User {
@@ -32,11 +32,13 @@ const typeDefs = `
 const resolvers = {
   Query: {
     add(parent, args, context, info) {
-      if (args.num1 && args.num2) {
-        return args.num1 + args.num2;
-      } else {
-        return args.num1 ? args.num1 : args.num2;
+      if (args.numbers.length === 0) {
+        return 0;
       }
+      // [1, 5, 10, 2]
+      return args.numbers.reduce((accumlator, currentValue) => {
+        return accumlator + currentValue;
+      });
     },
     greeting(parent, args, context, info) {
       if (args.name && args.position) {
